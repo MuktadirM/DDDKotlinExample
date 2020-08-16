@@ -5,7 +5,7 @@ import com.mtechsolutions.either_android.Either.Companion.left
 import com.mtechsolutions.either_android.Either.Companion.right
 
 abstract class ValueObjects<T>() : IValidatable{
-    abstract val value: Either<ValueFailure<T>, T>
+    abstract val value: Either<ValueFailure, T>
 
     override fun isValid(): Boolean {
        return value.isRight()
@@ -15,7 +15,7 @@ abstract class ValueObjects<T>() : IValidatable{
         return value.fold({itLeft -> throw UnexpectedValueError(itLeft)},{itRight-> itRight})
     }
 
-    fun failureOrUnit():Either<ValueFailure<T>, Unit>{
+    fun failureOrUnit():Either<ValueFailure, Unit>{
         return value.fold(
             {l-> left(l)},
             {r->right(Unit)}
@@ -27,7 +27,7 @@ abstract class ValueObjects<T>() : IValidatable{
     }
 }
 
-class StringSingleLine private constructor(override val value: Either<ValueFailure<String>, String>)
+class StringSingleLine private constructor(override val value: Either<ValueFailure, String>)
     : ValueObjects<String>() {
     companion object{
         fun getValidSingleLine(input:String) = StringSingleLine(value = validateSingleLine(input))

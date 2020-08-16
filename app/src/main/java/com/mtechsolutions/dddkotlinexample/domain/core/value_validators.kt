@@ -5,7 +5,7 @@ import com.mtechsolutions.either_android.Either.Companion.left
 import com.mtechsolutions.either_android.Either.Companion.right
 
 
-fun validateMaxStringLength(input:String, maxLength:Int):Either<ValueFailure<String>,String>{
+fun validateMaxStringLength(input:String, maxLength:Int):Either<ValueFailure,String>{
     if (input.length <= maxLength){
         return right(input);
     }
@@ -15,7 +15,7 @@ fun validateMaxStringLength(input:String, maxLength:Int):Either<ValueFailure<Str
     }
 }
 
-fun validateFieldNotEmpty(input:String):Either<ValueFailure<String>, String>{
+fun validateFieldNotEmpty(input:String):Either<ValueFailure, String>{
     if (input.isEmpty()) {
         return left(ValueFailure.Empty(input));
     } else {
@@ -23,7 +23,7 @@ fun validateFieldNotEmpty(input:String):Either<ValueFailure<String>, String>{
     }
 }
 
-fun validateEmailAddress(email:String):Either<ValueFailure<String>, String>{
+fun validateEmailAddress(email:String):Either<ValueFailure, String>{
     if (emailRegexPattern.matcher(email).matches()) {
         return right(email);
     } else {
@@ -31,7 +31,7 @@ fun validateEmailAddress(email:String):Either<ValueFailure<String>, String>{
     }
 }
 
-fun validatePassword(input: String):Either<ValueFailure<String>, String>{
+fun validatePassword(input: String):Either<ValueFailure, String>{
     if (input.length >= 6) {
         return right(input);
     } else {
@@ -39,7 +39,7 @@ fun validatePassword(input: String):Either<ValueFailure<String>, String>{
     }
 }
 
-fun validateFullName(input:String):Either<ValueFailure<String>, String>{
+fun validateFullName(input:String):Either<ValueFailure, String>{
     if (input.length >= 3) {
         return right(input);
     } else {
@@ -47,7 +47,7 @@ fun validateFullName(input:String):Either<ValueFailure<String>, String>{
     }
 }
 
-fun validatePasswordMatch(input: String,other:String):Either<ValueFailure<String>, String>{
+fun validatePasswordMatch(input: String,other:String):Either<ValueFailure, String>{
     if (input == other) {
         return right(input);
     } else {
@@ -55,7 +55,7 @@ fun validatePasswordMatch(input: String,other:String):Either<ValueFailure<String
     }
 }
 
-fun validateSingleLine(input: String):Either<ValueFailure<String>, String>{
+fun validateSingleLine(input: String):Either<ValueFailure, String>{
     if (input.contains('\n')) {
         return left(ValueFailure.Multiline(failedValue= input));
     } else {

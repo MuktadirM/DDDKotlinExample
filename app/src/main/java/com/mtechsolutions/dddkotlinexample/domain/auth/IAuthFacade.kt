@@ -6,8 +6,8 @@ import java.util.*
 
 interface IAuthFacade{
     suspend fun getSignedInUser(): Optional<User>
-    suspend fun signInWithEmailPassword(emailAddress: EmailAddress,password: Password) : Either<AuthFailure<String>, Unit>
-    suspend fun registerWithEmailPassword(fullName: FullName,emailAddress: EmailAddress,password: Password):Either<AuthFailure<String>,Unit>
-    suspend fun signInWithGoogle():Either<AuthFailure<String>,Unit>
+    suspend fun signInWithEmailPassword(emailAddress: EmailAddress,password: Password) : Either<AuthFailure, Unit>
+    suspend fun registerWithEmailPassword(fullName: FullName,emailAddress: EmailAddress,password: Password):Either<AuthFailure,Unit>
+    suspend fun signInWithGoogle():Either<AuthFailure,Unit>
     suspend fun signOut():Unit
 }

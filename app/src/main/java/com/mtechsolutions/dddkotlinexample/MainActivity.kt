@@ -1,8 +1,8 @@
 package com.mtechsolutions.dddkotlinexample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.mtechsolutions.dddkotlinexample.databinding.ActivityMainBinding
 import com.mtechsolutions.dddkotlinexample.domain.auth.AuthFailure
 import com.mtechsolutions.dddkotlinexample.domain.auth.EmailAddress
@@ -15,40 +15,34 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     companion object val TAG = "MainActivity"
 
-        var mref = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d(TAG, "onCreate: ")
-
         binding.name.text = "Muktadir";
 
-        mref = "Hello";
        val email : EmailAddress = emailAddress("emdmd")
         val  pass : Password = password("232");
 
+
+
    Log.d(TAG,"Valid "+email.isValid())
-        val failure = AuthFailure.CancelledByUser("");
+        val failure = AuthFailure.CancelledByUser("Cancel by user");
+        Log.d(TAG,getErrorMsg(failure).toString());
+
         Log.d(TAG, "onCreate: "+uniqueId().value.right().get())
 
     }
 
-    override fun onStart() {
-        super.onStart()
 
-        Log.d(TAG, "onStart: "+mref)
-
-    }
-
-    fun getErrorMsg(authFailure: AuthFailure<String>):Any{
+    private fun getErrorMsg(authFailure: AuthFailure):Any{
         return when(authFailure){
-            is AuthFailure.InvalidEmailAndPasswordCombination -> AuthFailure.InvalidEmailAndPasswordCombination("Wrong Email or Password");
-            is AuthFailure.EmailAlreadyInUse -> AuthFailure.EmailAlreadyInUse("Email Already in Use")
-            is AuthFailure.ServerError ->AuthFailure.ServerError("Sever Error")
-            is AuthFailure.CancelledByUser -> AuthFailure.CancelledByUser("Login cancel")
+            is AuthFailure.InvalidEmailAndPasswordCombination<*> -> AuthFailure.InvalidEmailAndPasswordCombination("Wrong Email or Password");
+            is AuthFailure.EmailAlreadyInUse<*> -> AuthFailure.EmailAlreadyInUse("Email Already in Use")
+            is AuthFailure.ServerError<*> ->AuthFailure.ServerError("Sever Error")
+            is AuthFailure.CancelledByUser<*> -> AuthFailure.CancelledByUser("Login cancel")
+            is AuthFailure.UnknownAuthFailure ->"Unknown Error Happen"
         }
     }
 }
